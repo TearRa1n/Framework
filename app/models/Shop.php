@@ -2,9 +2,11 @@
 
 namespace app\models;
 
-class Shop
+class Shop extends Model
 {
     const MAX_RATING = 10;
+    const TABLE_NAME = 'shop';
+
 //TODO id
     private ?int $id = null;
     private string $name;
@@ -16,6 +18,8 @@ class Shop
         $this->setName($name);
         $this->setAddress($address);
         $this->setRating($rating);
+
+        parent::__construct();
     }
 
     public function getId() : int

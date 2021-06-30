@@ -6,23 +6,27 @@ use app\database\PDOConnection;
 use app\models\User;
 use PDO;
 
-class UserTableGateway
+class UserTableGateway extends TableGateway
 {
     private PDOConnection $connection;
 
+    /**
+     * Объект для работы с БД
+     */
     public function __construct(PDOConnection $connection)
     {
         $this->connection = $connection;
     }
 
+
     public function findById(int $id): User
     {
-        $stmt = $this->connection->query("SELECT * FROM shop WHERE id = {$id}");
+        $stmt = $this->connection->query("SELECT * FROM user WHERE id = {$id}");
         $stmt = $this->connection->execute($stmt);
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $user = new User($result['name'], $result['address'], $result['rating']);
+        $user = new User($result['login'], $result['password'], $result['first_name'], $result['middle_name'], $result['last_name']);
         $user->setId($result['id']);
 
         return $user;

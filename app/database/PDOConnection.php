@@ -7,7 +7,7 @@ use PDO;
 use PDOException;
 use PDOStatement;
 
-class PDOConnection implements \ConnectionDatabaseInterface
+class PDOConnection implements ConnectionDatabaseInterface
 {
     private PDO $pdo;
 
@@ -23,9 +23,6 @@ class PDOConnection implements \ConnectionDatabaseInterface
 
     }
 
-    /**
-     * @return PDOConnection
-     */
     public static function getInstance()
     {
         // если нет созданного обьекта коннекшена
@@ -63,7 +60,7 @@ class PDOConnection implements \ConnectionDatabaseInterface
         return $stmt;
     }
 
-    public function execute(PDOStatement $stmt, array $data = [])
+    public function execute(PDOStatement $stmt, array $data = []): ?PDOStatement
     {
         $preTime = microtime(true);
         if(count($data)) {
@@ -74,7 +71,7 @@ class PDOConnection implements \ConnectionDatabaseInterface
         $queryTime = microtime(true) - $preTime;
         //var_dump($queryTime);
         $this->queryTime[] = [$stmt->queryString, $queryTime];
-        return $isSuccess ? $stmt : false;
+        return $isSuccess ? $stmt : null;
     }
 
     public function getTimeQueries()

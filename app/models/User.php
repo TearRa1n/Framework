@@ -2,28 +2,45 @@
 
 namespace app\models;
 
-class User
+class User extends Model
 {
-    private int $id;
+    const TABLE_NAME = 'user';
+    //TODO ???
+    private ?int $id = null;
     private string $login;
     private string $password;
     private ?string $firstName = null;
     private ?string $middleName = null;
     private ?string $lastName = null;
 
-    public function __construct($id,
-                                $login,
+    public function __construct($login,
                                 $password,
                                 $firstName = null,
                                 $middleName = null,
                                 $lastName = null)
     {
-        $this->setId($id);
+//        $id = null
+//        $this->setId($id);
         $this->setLogin($login);
         $this->setPassword($password);
         $this->setFirstName($firstName);
         $this->setMiddleName($middleName);
         $this->setLastName($lastName);
+
+        parent::__construct();
+    }
+
+    public function __get($name)
+    {
+        $method = 'get' . mb_strtoupper($name);
+
+        return $this->$method();
+    }
+
+    public function __set($name, $value)
+    {
+        $method = 'set' . mb_strtoupper($name);
+        $this->$method($value);
     }
 
     public function getId(): int
@@ -88,5 +105,3 @@ class User
 
 
 }
-
-//$user = new User();
