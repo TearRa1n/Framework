@@ -1,0 +1,12 @@
+{
+  "name": "glambertessa/dbconnection",
+  "require": {
+    "vlucas/phpdotenv": "^5.3",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "app/"
+    }
+  }
+}
