@@ -8,6 +8,8 @@ use PDO;
 
 class UserTableGateway extends TableGateway
 {
+    private $sql = '';
+
     private PDOConnection $connection;
 
     /**
@@ -17,7 +19,6 @@ class UserTableGateway extends TableGateway
     {
         $this->connection = $connection;
     }
-
 
     public function findById(int $id): User
     {
@@ -49,7 +50,6 @@ class UserTableGateway extends TableGateway
                                                                                :last_name
                                                                                )"
         );
-
         $this->connection->execute($stmt, $data);
     }
 }

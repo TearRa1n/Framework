@@ -57,6 +57,11 @@ class PDOConnection implements ConnectionDatabaseInterface
     {
         $this->queryCount++;
         $stmt = $this->pdo->query($q);
+        if($stmt === false) {
+            echo "Query is failed \n";
+            var_dump($q);
+            die();
+        }
         return $stmt;
     }
 
