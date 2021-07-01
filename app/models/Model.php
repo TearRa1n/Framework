@@ -15,11 +15,16 @@ abstract class Model
         $this->connection = PDOConnection::getInstance();
     }
 
+    public function table()
+    {
+        return null;
+    }
+
     public static function find(): QueryBuilder
     {
         //TODo child table name
 //        $sql = 'SELECT * FROM ' . self::TABLE_NAME;
-        $sql = 'SELECT * FROM ' . User::TABLE_NAME;
+        $sql = 'SELECT * FROM ' . static::table();
 
         $qb = new QueryBuilder($sql);
 

@@ -7,7 +7,7 @@ class Shop extends Model
     const MAX_RATING = 10;
     const TABLE_NAME = 'shop';
 
-//TODO id
+    //TODO id
     private ?int $id = null;
     private string $name;
     private string $address;

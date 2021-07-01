@@ -13,16 +13,23 @@ use app\models\User;
 //use app\models\Shop;
 //use app\models\gateway\ShopTableGateway;
 
+function dd($value){
+    var_dump($value);
+    die();
+}
+
 $connection = PDOConnection::getInstance();
 
-//$user = new User('qwe', 'ewq');
+$user = new User('qwe', 'ewq', 'ewe');
 
 $users = User::find()
     ->where('id', '>=', '5')
-//    ->orderBy('id')
+    ->orderBy('id', 'DESC')
     ->getArrayResult();
 
-var_dump($users);
+$user->login;
+
+//var_dump($users);
 
 //$user = User::find()
 //    ->where('login', '=', $login)

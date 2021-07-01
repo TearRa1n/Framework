@@ -13,6 +13,12 @@ class User extends Model
     private ?string $middleName = null;
     private ?string $lastName = null;
 
+    private array $fillable = [
+        'firstName',
+        'middleName',
+        'lastName'
+    ];
+
     public function __construct($login,
                                 $password,
                                 $firstName = null,
@@ -30,17 +36,37 @@ class User extends Model
         parent::__construct();
     }
 
-    public function __get($name)
+    public function table()
     {
-        $method = 'get' . mb_strtoupper($name);
-
-        return $this->$method();
+        return self::TABLE_NAME;
     }
 
-    public function __set($name, $value)
+    public function __get(string $name)
+    {
+        if(!in_array($name, $this->fillable)) {
+            $trace = debug_backtrace();
+            trigger_error(
+                'Undefined property via __get(): ' . $name .
+                ' in ' . $trace[0]['file'] .
+                ' on line ' . $trace[0]['line'],
+                E_USER_NOTICE);
+            return null;
+        }
+
+        $method = 'get' . mb_strtoupper($name);
+        if (method_exists($this, $method)) {
+            return $this->$method();
+        }
+        return $this->$name;
+    }
+
+    function __set($name, $value)
     {
         $method = 'set' . mb_strtoupper($name);
-        $this->$method($value);
+        if (method_exists($this, $method)) {
+            return $this->$method($value);
+        }
+        $this->$name = $value;
     }
 
     public function getId(): int
